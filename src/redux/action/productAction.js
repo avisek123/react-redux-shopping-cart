@@ -6,8 +6,14 @@ const API_URL = "https://fakestoreapi.com/products";
 const GET_PRODUCTS = "GET_PRODUCTS";
 const GET_PRODUCTS_ERR = "GET_PRODUCTS_ERR";
 const GET_PRODUCTS_SUCCESS = "GET_PRODUCTS_SUCCESS";
+const SELECTED_PRODUCT = "SELCTED_PRODUCT";
 // export type
-export { GET_PRODUCTS, GET_PRODUCTS_ERR, GET_PRODUCTS_SUCCESS };
+export {
+  GET_PRODUCTS,
+  GET_PRODUCTS_ERR,
+  GET_PRODUCTS_SUCCESS,
+  SELECTED_PRODUCT,
+};
 // create action
 export const productAction = () => {
   return {
@@ -24,6 +30,12 @@ export const productError = (error) => {
   return {
     type: GET_PRODUCTS_ERR,
     payload: error,
+  };
+};
+export const selectedProduct = (product) => {
+  return {
+    type: SELECTED_PRODUCT,
+    payload: product,
   };
 };
 // fetch data

@@ -24,6 +24,12 @@ const productReducer = (state = InitialState, action) => {
         error: action.payload,
         loading: false,
       };
+    case actions.SELECTED_PRODUCT:
+      return {
+        ...state,
+        product: action.payload,
+        loading: false,
+      };
     default:
       return state;
   }
