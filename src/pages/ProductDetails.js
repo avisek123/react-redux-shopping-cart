@@ -1,14 +1,16 @@
-import { Card, CardContent, CardMedia, Typography, Grid } from "@mui/material";
-import axios from "axios";
-import React, { useEffect } from "react";
+import { Card, CardMedia, Typography, Button } from "@mui/material";
+import { selectedProduct, addProduct } from "../redux";
 import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from "react";
 import { useParams } from "react-router";
-import { selectedProduct } from "../redux";
+import axios from "axios";
 
 function ProductDetails() {
-  const products = useSelector((state) => state.products?.product);
-  console.log(products);
-  // get id of the product using useparams hook
+  const products = useSelector((state) => {
+    return state.products?.product;
+  });
+  const cartDataArr = useSelector((state) => state.products?.cartData);
+  // console.log(cartDataArr);
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -18,33 +20,60 @@ function ProductDetails() {
       .catch((err) => {
         console.log("Err: ", err);
       });
-    console.log("response: ", response?.data);
     dispatch(selectedProduct(response.data));
   };
   useEffect(() => {
     if (id) fetchProductDetail(id);
   }, [id]);
 
+  const handleAddToCart = (item) => {
+    dispatch(addProduct(cartDataArr, item));
+  };
+
   return (
-    <div>
-      <Card sx={{ margin: 2 }}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+
+        marginTop: "3rem",
+      }}
+    >
+      <Card style={{ width: "30%", height: "100%", padding: "2rem" }}>
         <CardMedia
-          component="img"
-          height="200"
-          image={products.image}
-          alt="green iguana"
+          style={{ height: "200px" }}
+          image={products?.image}
+          title={products?.title}
         />
-        <CardContent>
-          <Typography variant="h5" component="div">
-            {products?.title}
+
+        <Typography gutterBottom variant="h5" component="h2">
+          {products?.title}
+        </Typography>
+        <Typography variant="body2" color="textSecondary" component="p">
+          {products?.description}
+        </Typography>
+        <Typography variant="h5" component="div" />
+        {/* Material Button */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <Typography variant="h4" color="textSecondary" component="p">
+            {` $${products?.price}`}
           </Typography>
-          {/* <Typography variant="body2" color="text.secondary">
-                  {products?.desc}
-                </Typography> */}
-          <Typography variant="h5" component="div">
-            {`$ ${products?.price} `}
-          </Typography>
-        </CardContent>
+          <Button
+            onClick={() => handleAddToCart(products)}
+            style={{ marginTop: 10 }}
+            variant="contained"
+            color="primary"
+          >
+            Add to cart
+          </Button>
+        </div>
       </Card>
     </div>
   );

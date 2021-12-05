@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 
 function Sections() {
   const response = useSelector((state) => state.products?.products);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProducts());
@@ -17,7 +18,7 @@ function Sections() {
     <div style={{ marginTop: "1rem" }}>
       <Grid container>
         {response?.map((item) => (
-          <Grid item lg={3} md={3}>
+          <Grid key={item?.id} item lg={3} md={3}>
             <Card sx={{ margin: 2 }}>
               <CardMedia
                 component="img"
@@ -35,9 +36,7 @@ function Sections() {
                 >
                   {item?.title}
                 </Typography>
-                {/* <Typography variant="body2" color="text.secondary">
-                  {item?.desc}
-                </Typography> */}
+
                 <Typography variant="h5" component="div">
                   {`$ ${item?.price} `}
                 </Typography>

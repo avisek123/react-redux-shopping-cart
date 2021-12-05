@@ -4,6 +4,7 @@ const InitialState = {
   product: {},
   loading: false,
   error: null,
+  cartData: [],
 };
 const productReducer = (state = InitialState, action) => {
   switch (action.type) {
@@ -29,6 +30,11 @@ const productReducer = (state = InitialState, action) => {
         ...state,
         product: action.payload,
         loading: false,
+      };
+    case actions.ADD_PRODUCTS:
+      return {
+        ...state,
+        cartData: action.payload,
       };
     default:
       return state;
