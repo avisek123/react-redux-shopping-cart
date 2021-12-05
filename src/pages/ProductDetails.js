@@ -10,7 +10,7 @@ function ProductDetails() {
     return state.products?.product;
   });
   const cartDataArr = useSelector((state) => state.products?.cartData);
-  // console.log(cartDataArr);
+  console.log(cartDataArr);
   const { id } = useParams();
   const dispatch = useDispatch();
 

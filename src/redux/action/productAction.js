@@ -41,10 +41,22 @@ export const selectedProduct = (product) => {
   };
 };
 export const addProduct = (prevArr, item) => {
-  return {
-    type: ADD_PRODUCTS,
-    payload: [...prevArr, item],
-  };
+  // remove from cart
+  const newArr = prevArr.filter((ele) => ele?.id !== item?.id);
+  console.log("prevArr", prevArr);
+  console.log("newArr", newArr);
+
+  if (prevArr.includes(item)) {
+    return {
+      type: ADD_PRODUCTS,
+      payload: newArr,
+    };
+  } else {
+    return {
+      type: ADD_PRODUCTS,
+      payload: [...prevArr, item],
+    };
+  }
 };
 // fetch data
 export const getProducts = () => {
